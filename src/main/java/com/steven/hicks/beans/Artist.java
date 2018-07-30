@@ -1,6 +1,7 @@
-package com.steven.hicks;
+package com.steven.hicks.beans;
 
 import java.util.Objects;
+
 
 public class Artist
 {

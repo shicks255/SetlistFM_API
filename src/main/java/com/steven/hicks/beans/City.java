@@ -1,4 +1,4 @@
-package com.steven.hicks;
+package com.steven.hicks.beans;
 
 public class City
 {

@@ -1,4 +1,4 @@
-package com.steven.hicks;
+package com.steven.hicks.beans;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
