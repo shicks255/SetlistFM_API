@@ -9,7 +9,7 @@ public class Artist
 
     private long tmid;
     private String name = "";
-    private String searchName = "";
+    private String sortName = "";
     private String disambiguation = "";
     private String url = "";
 
@@ -65,14 +65,14 @@ public class Artist
         this.name = name;
     }
 
-    public String getSearchName()
+    public String getSortName()
     {
-        return searchName;
+        return sortName;
     }
 
-    public void setSearchName(String searchName)
+    public void setSortName(String sortName)
     {
-        this.searchName = searchName;
+        this.sortName = sortName;
     }
 
     public String getDisambiguation()

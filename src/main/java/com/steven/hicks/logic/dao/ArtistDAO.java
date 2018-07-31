@@ -1,8 +1,8 @@
 package com.steven.hicks.logic.dao;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Artist;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -45,14 +45,14 @@ public class ArtistDAO
             String input2 = "";
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             while ((input2 = in.readLine()) != null)
-            {
-                System.out.println(input2);
                 data.append(input2);
-            }
 
+            JsonNode node = m_objectMapper.readTree(data.toString());
+            JsonNode artistNodes = node.get("artist");
 
-
-            artists = m_objectMapper.readValue(connection.getURL(), new TypeReference<List<Artist>>(){});
+            CollectionType javaType = m_objectMapper.getTypeFactory()
+                    .constructCollectionType(List.class, Artist.class);
+            artists = m_objectMapper.readValue(artistNodes.toString(), javaType);
         }
         catch (IOException e)
         {
