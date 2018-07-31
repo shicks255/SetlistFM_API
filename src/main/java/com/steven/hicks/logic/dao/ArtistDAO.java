@@ -15,26 +15,26 @@ public class ArtistDAO implements DAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
-    public static List<Artist> search(ArtistQueryBuilder query)
+    public static List<Artist> search(ArtistQueryBuilder queryBuilder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/artists?");
 
         StringBuilder queryString = new StringBuilder();
 
-        if (query.getArtistName().length() > 0)
+        if (queryBuilder.getArtistName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistName=" + query.getArtistName());
+            queryString.append("artistName=" + queryBuilder.getArtistName());
         }
-        if (query.getArtistMbid().length() > 0)
+        if (queryBuilder.getArtistMbid().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistMbid=" + query.getArtistMbid());
+            queryString.append("artistMbid=" + queryBuilder.getArtistMbid());
         }
-        if (query.getArtistTmid().length() > 0)
+        if (queryBuilder.getArtistTmid().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistTmid=" + query.getArtistTmid());
+            queryString.append("artistTmid=" + queryBuilder.getArtistTmid());
         }
 
         urlAddress.append(queryString);
