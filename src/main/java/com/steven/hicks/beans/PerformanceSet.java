@@ -1,7 +1,10 @@
 package com.steven.hicks.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PerformanceSet
 {
 
@@ -30,5 +33,15 @@ public class PerformanceSet
     public void setNumber(Integer number)
     {
         this.number = number;
+    }
+
+    public List<Song> getSong()
+    {
+        return song;
+    }
+
+    public void setSong(List<Song> song)
+    {
+        this.song = song;
     }
 }

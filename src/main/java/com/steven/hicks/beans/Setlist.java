@@ -18,7 +18,7 @@ public class Setlist
 
     private Venue venue;
 
-    private List<PerformanceSet> set;
+    private List<PerformanceSet> sets;
 
     private String info = "";
 
@@ -54,14 +54,14 @@ public class Setlist
         this.venue = venue;
     }
 
-    public List<PerformanceSet> getSet()
+    public List<PerformanceSet> getSets()
     {
-        return set;
+        return sets;
     }
 
-    public void setSet(List<PerformanceSet> set)
+    public void setSets(List<PerformanceSet> sets)
     {
-        this.set = set;
+        this.sets = sets;
     }
 
     public String getInfo()

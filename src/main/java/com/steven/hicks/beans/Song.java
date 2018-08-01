@@ -1,5 +1,8 @@
 package com.steven.hicks.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Song
 {
 
