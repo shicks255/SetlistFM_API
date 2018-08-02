@@ -8,6 +8,7 @@ import com.steven.hicks.logic.deserializers.LocalDateTimeDeserializer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Setlist
@@ -31,9 +32,31 @@ public class Setlist
     private LocalDateTime lastUpdated;
 
 
+    @Override
+    public String toString()
+    {
+        return "Setlist - " + artist + " on " + eventDate + " at " + venue.getName() + " id " + id;
+    }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Setlist setlist = (Setlist) o;
+        return Objects.equals(id, setlist.id) &&
+                Objects.equals(artist, setlist.artist) &&
+                Objects.equals(venue, setlist.venue) &&
+                Objects.equals(eventDate, setlist.eventDate);
+    }
 
-//Getters and setters
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id, artist, venue, eventDate);
+    }
+
+    //Getters and setters
     public Artist getArtist()
     {
         return artist;

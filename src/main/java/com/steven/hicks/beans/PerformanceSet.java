@@ -7,16 +7,17 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PerformanceSet
 {
-
     private String name = "";
-
     private Integer number;
-
     private Integer encore;
-
     List<PerformanceSet> set;
-
     List<Song> song;
+
+    @Override
+    public String toString()
+    {
+        return "Set - " + name;
+    }
 
     public String getName()
     {
