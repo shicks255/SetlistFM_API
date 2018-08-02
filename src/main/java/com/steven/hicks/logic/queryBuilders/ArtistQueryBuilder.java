@@ -1,4 +1,4 @@
-package com.steven.hicks.logic.dao;
+package com.steven.hicks.logic.queryBuilders;
 
 public class ArtistQueryBuilder implements QueryBuilder
 {

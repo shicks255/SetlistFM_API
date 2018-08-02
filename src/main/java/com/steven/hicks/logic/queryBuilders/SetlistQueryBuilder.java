@@ -1,4 +1,4 @@
-package com.steven.hicks.logic.dao;
+package com.steven.hicks.logic.queryBuilders;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

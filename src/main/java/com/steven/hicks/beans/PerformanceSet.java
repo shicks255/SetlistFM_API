@@ -12,8 +12,11 @@ public class PerformanceSet
 
     private Integer number;
 
-    private List<Song> song;
+    private Integer encore;
 
+    List<PerformanceSet> set;
+
+    List<Song> song;
 
     public String getName()
     {
@@ -33,6 +36,26 @@ public class PerformanceSet
     public void setNumber(Integer number)
     {
         this.number = number;
+    }
+
+    public List<PerformanceSet> getSet()
+    {
+        return set;
+    }
+
+    public void setSet(List<PerformanceSet> set)
+    {
+        this.set = set;
+    }
+
+    public Integer getEncore()
+    {
+        return encore;
+    }
+
+    public void setEncore(Integer encore)
+    {
+        this.encore = encore;
     }
 
     public List<Song> getSong()

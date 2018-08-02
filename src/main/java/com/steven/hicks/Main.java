@@ -1,9 +1,8 @@
 package com.steven.hicks;
 
-import com.steven.hicks.beans.Artist;
-import com.steven.hicks.beans.City;
 import com.steven.hicks.beans.Setlist;
 import com.steven.hicks.logic.dao.*;
+import com.steven.hicks.logic.queryBuilders.SetlistQueryBuilder;
 
 import java.util.List;
 

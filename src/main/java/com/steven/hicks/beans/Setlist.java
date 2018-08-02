@@ -2,8 +2,8 @@ package com.steven.hicks.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.steven.hicks.logic.dao.LocalDateDeserializer;
-import com.steven.hicks.logic.dao.LocalDateTimeDeserializer;
+import com.steven.hicks.logic.deserializers.LocalDateDeserializer;
+import com.steven.hicks.logic.deserializers.LocalDateTimeDeserializer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

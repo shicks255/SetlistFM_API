@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Artist;
+import com.steven.hicks.logic.queryBuilders.ArtistQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;

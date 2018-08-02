@@ -1,4 +1,4 @@
-package com.steven.hicks.logic.dao;
+package com.steven.hicks.logic.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

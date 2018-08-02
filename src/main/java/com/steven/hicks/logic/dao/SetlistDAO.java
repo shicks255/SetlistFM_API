@@ -1,9 +1,11 @@
 package com.steven.hicks.logic.dao;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Setlist;
+import com.steven.hicks.logic.queryBuilders.SetlistQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -119,6 +121,7 @@ public class SetlistDAO implements DAO
             CollectionType javaType = m_objectMapper.getTypeFactory()
                     .constructCollectionType(List.class, Setlist.class);
 
+            m_objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             setlists = m_objectMapper.readValue(setlistsNode.toString(), javaType);
         }
         catch (Exception e)
