@@ -16,6 +16,35 @@ public class ArtistDAO implements DAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
+    public static Artist getArtist(String artistMbid)
+    {
+        Artist artist = null;
+        String urlAddress = "https://api.setlist.fm/rest/1.0/artist/" + artistMbid;
+        try
+        {
+            URL url = new URL(urlAddress);
+            HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+
+            connection.setRequestProperty("x-api-key", "692ab4ce-9835-4040-8bb8-d6bb77ba54f8");
+            connection.setRequestProperty("accept", "application/json");
+            connection.setRequestMethod("GET");
+
+            StringBuilder data = new StringBuilder();
+            String input2 = "";
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            while ((input2 = in.readLine()) != null)
+                data.append(input2);
+
+            artist = m_objectMapper.readValue(data.toString(), Artist.class);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+        return artist;
+    }
+
     public static List<Artist> search(ArtistQueryBuilder queryBuilder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/artists?");
