@@ -1,26 +1,29 @@
 package com.steven.hicks.logic.dao;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import com.steven.hicks.beans.City;
-import com.steven.hicks.logic.queryBuilders.CityQueryBuilder;
+import com.steven.hicks.beans.Venue;
+import com.steven.hicks.logic.queryBuilders.VenueQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
-public class CityDAO implements DAO
+public class VenueDAO implements DAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
-    public static City getCity(String geoId)
+    public static Venue getVenue(String id)
     {
-        City city = null;
+        Venue venue = null;
 
-        String urlAddress = "https://api.setlist.fm/rest/1.0/city/" + geoId;
+        String urlAddress = "https://api.setlist.fm/rest/1.0/venue/" + id;
+
         try
         {
             URL url = new URL(urlAddress);
@@ -36,54 +39,65 @@ public class CityDAO implements DAO
             while ((input2 = in.readLine()) != null)
                 data.append(input2);
 
-            city = m_objectMapper.readValue(data.toString(), City.class);
+            venue = m_objectMapper.readValue(data.toString(), Venue.class);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
 
-        return city;
+        return venue;
     }
 
-    public static List<City> search(CityQueryBuilder queryBuilder)
+    public static List<Venue> search(VenueQueryBuilder queryBuilder)
     {
-        StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/cities?");
+        String urlAddress = "https://api.setlist.fm/rest/1.0/search/venues?";
 
-        StringBuilder queryString = new StringBuilder();
+        StringBuilder query = new StringBuilder();
 
-        if (queryBuilder.getId().length() > 0)
+        if (queryBuilder.getCityId().length() > 0)
         {
-            if (queryString.length() > 0) queryString.append("&");
-            queryString.append("id=?" + queryBuilder.getId());
+            if (query.length() > 0) query.append("&");
+            query.append("cityId=" + queryBuilder.getCityId());
         }
-        if (queryBuilder.getName().length() > 0)
+
+        if (queryBuilder.getCityName().length() > 0)
         {
-            if (queryString.length() > 0) queryString.append("?");
-            queryString.append("name=" + queryBuilder.getName());
+            if (query.length() > 0) query.append("&");
+            query.append("cityName=" + queryBuilder.getCityName());
         }
+
+        if (queryBuilder.getCountryName().length() > 0)
+        {
+            if (query.length() > 0) query.append("&");
+            query.append("country=" + queryBuilder.getCountryName());
+        }
+
         if (queryBuilder.getState().length() > 0)
         {
-            if (queryString.length() > 0) queryString.append("?");
-            queryString.append("state=" + queryBuilder.getState());
+            if (query.length() > 0) query.append("&");
+            query.append("state=" + queryBuilder.getState());
         }
+
         if (queryBuilder.getStateCode().length() > 0)
         {
-            if (queryString.length() > 0) queryString.append("?");
-            queryString.append("stateCode=" + queryBuilder.getStateCode());
+            if (query.length() > 0) query.append("&");
+            query.append("stateCode=" + queryBuilder.getStateCode());
         }
-        if (queryBuilder.getCountry().length() > 0)
+
+        if (queryBuilder.getName().length() > 0)
         {
-            if (queryString.length() > 0) queryString.append("?");
-            queryString.append("country=" + queryBuilder.getCountry());
+            if (query.length() > 0) query.append("&");
+            query.append("name=" + queryBuilder.getName());
         }
 
-        urlAddress.append(queryString);
+        urlAddress += query.toString();
 
-        List<City> cities = null;
+        List<Venue> venues = new ArrayList<>();
+
         try
         {
-            URL url = new URL(urlAddress.toString());
+            URL url = new URL(urlAddress);
             HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
 
             connection.setRequestProperty("x-api-key", "692ab4ce-9835-4040-8bb8-d6bb77ba54f8");
@@ -97,20 +111,19 @@ public class CityDAO implements DAO
                 data.append(input2);
 
             JsonNode node = m_objectMapper.readTree(data.toString());
-            JsonNode citiesNode = node.get("cities");
+            JsonNode venueNode = node.get("venue");
 
             CollectionType javaType = m_objectMapper.getTypeFactory()
-                    .constructCollectionType(List.class, City.class);
+                    .constructCollectionType(List.class, Venue.class);
 
-            cities = m_objectMapper.readValue(citiesNode.toString(), javaType);
+            m_objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            venues= m_objectMapper.readValue(venueNode.toString(), javaType);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
 
-        return cities;
+        return venues;
     }
-
-
 }

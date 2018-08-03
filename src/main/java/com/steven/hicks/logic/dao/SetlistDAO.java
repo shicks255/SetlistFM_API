@@ -17,6 +17,37 @@ public class SetlistDAO implements DAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
+    public static Setlist getSetlist(String id)
+    {
+        Setlist setlist = null;
+        String urlAddress = "https://api.setlist.fm/rest/1.0/setlist/" + id;
+
+        try
+        {
+            URL url = new URL(urlAddress);
+            HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+
+            connection.setRequestProperty("x-api-key", "692ab4ce-9835-4040-8bb8-d6bb77ba54f8");
+            connection.setRequestProperty("accept", "application/json");
+            connection.setRequestMethod("GET");
+
+            StringBuilder data = new StringBuilder();
+            String input2 = "";
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            while ((input2 = in.readLine()) != null)
+                data.append(input2);
+
+            m_objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            setlist = m_objectMapper.readValue(data.toString(), Setlist.class);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+        return setlist;
+    }
+
     public static List<Setlist>  search(SetlistQueryBuilder queryBuilder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/setlists?");
