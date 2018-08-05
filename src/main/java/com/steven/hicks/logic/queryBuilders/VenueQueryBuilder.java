@@ -33,25 +33,25 @@ public class VenueQueryBuilder
 
         public Builder cityName(String x)
         {
-            this.cityName = x;
+            this.cityName = x.replace(" ", "%20");
             return this;
         }
 
         public Builder countryName(String x)
         {
-            this.countryName = x;
+            this.countryName = x.replace(" ", "%20");
             return this;
         }
 
         public Builder name(String x)
         {
-            this.name = x;
+            this.name = x.replace(" ", "%20");
             return this;
         }
 
         public Builder state(String x)
         {
-            this.state = x;
+            this.state = x.replace(" ", "%20");
             return this;
         }
 

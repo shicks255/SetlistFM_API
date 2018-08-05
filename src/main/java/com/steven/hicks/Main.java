@@ -6,6 +6,7 @@ import com.steven.hicks.beans.Setlist;
 import com.steven.hicks.beans.Venue;
 import com.steven.hicks.logic.dao.*;
 import com.steven.hicks.logic.queryBuilders.ArtistQueryBuilder;
+import com.steven.hicks.logic.queryBuilders.CityQueryBuilder;
 import com.steven.hicks.logic.queryBuilders.SetlistQueryBuilder;
 import com.steven.hicks.logic.queryBuilders.VenueQueryBuilder;
 
@@ -22,10 +23,12 @@ public class Main
 //        System.out.println(afi);
 
 
-//        SetlistQueryBuilder builder = new SetlistQueryBuilder.Builder().artistName("afi")
-//                .build();
-//        List<Setlist> setlists = SetlistDAO.search(builder);
-
+        SetlistQueryBuilder builder = new SetlistQueryBuilder.Builder().artistName("In Flames")
+                .build();
+        List<Setlist> setlists = SetlistDAO.search(builder);
+//
+//
+        String test = "tesT";
 
 //        setlists.forEach(x -> System.out.println(x.toString()));
 

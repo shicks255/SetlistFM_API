@@ -21,7 +21,7 @@ public class ArtistQueryBuilder implements QueryBuilder
 
         public Builder artistName(String artistName)
         {
-            this.artistName = artistName;
+            this.artistName = artistName.replace(" ", "%20");
             return this;
         }
 

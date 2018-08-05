@@ -28,19 +28,19 @@ public class CityQueryBuilder implements QueryBuilder
 
         public Builder country(String x)
         {
-            this.country = x;
+            this.country = x.replace(" ", "%20");
             return this;
         }
 
         public Builder name(String x)
         {
-            this.name = x;
+            this.name = x.replace(" ", "%20");
             return this;
         }
 
         public Builder state(String x)
         {
-            this.state = x;
+            this.state = x.replace(" ", "%20");
             return this;
         }
 

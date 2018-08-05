@@ -47,7 +47,7 @@ public class SetlistQueryBuilder
 
         public Builder artistName(String x)
         {
-            this.artistName = x;
+            this.artistName = x.replace(" ", "%20");
             return this;
         }
 
@@ -65,7 +65,7 @@ public class SetlistQueryBuilder
 
         public Builder cityName(String x)
         {
-            this.cityName = x;
+            this.cityName = x.replace(" ", "%20");
             return this;
         }
 
@@ -101,7 +101,7 @@ public class SetlistQueryBuilder
 
         public Builder tourName(String x)
         {
-            this.tourName = x;
+            this.tourName = x.replace(" ", "%20");
             return this;
         }
 
@@ -113,7 +113,7 @@ public class SetlistQueryBuilder
 
         public Builder venueName(String x)
         {
-            this.venueName = x;
+            this.venueName = x.replace(" ", "%20");
             return this;
         }
 
