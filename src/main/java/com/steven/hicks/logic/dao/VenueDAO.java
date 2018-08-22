@@ -19,7 +19,7 @@ public class VenueDAO implements DAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
-    public static Venue getVenue(String id)
+    public Venue get(String id)
     {
         Venue venue = null;
 

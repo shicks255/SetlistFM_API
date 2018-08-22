@@ -18,7 +18,7 @@ public class SetlistDAO implements DAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
-    public static Setlist getSetlist(String id)
+    public Setlist get(String id)
     {
         Setlist setlist = null;
         String urlAddress = "https://api.setlist.fm/rest/1.0/setlist/" + id;

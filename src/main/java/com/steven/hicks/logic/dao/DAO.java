@@ -6,10 +6,11 @@ import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 
 import java.util.List;
 
-public interface DAO
+public interface DAO<T>
 {
 
     public <T> List<?> search(QueryBuilder builder);
 
+    public T get(String id);
 
 }

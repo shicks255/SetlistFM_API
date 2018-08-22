@@ -17,7 +17,7 @@ public class CityDAO implements DAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
-    public static City getCity(String geoId)
+    public City get(String geoId)
     {
         City city = null;
 

@@ -17,7 +17,7 @@ public class ArtistDAO implements DAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
-    public static Artist getArtist(String artistMbid)
+    public Artist get(String artistMbid)
     {
         Artist artist = null;
         String urlAddress = "https://api.setlist.fm/rest/1.0/artist/" + artistMbid;
