@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.City;
 import com.steven.hicks.logic.queryBuilders.CityQueryBuilder;
+import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -46,36 +47,38 @@ public class CityDAO implements DAO
         return city;
     }
 
-    public static List<City> search(CityQueryBuilder queryBuilder)
+    public List<City> search(QueryBuilder queryBuilder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/cities?");
 
+        CityQueryBuilder cityQueryBuilder = (CityQueryBuilder)queryBuilder;
+
         StringBuilder queryString = new StringBuilder();
 
-        if (queryBuilder.getId().length() > 0)
+        if (cityQueryBuilder.getId().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("id=?" + queryBuilder.getId());
+            queryString.append("id=?" + cityQueryBuilder.getId());
         }
-        if (queryBuilder.getName().length() > 0)
+        if (cityQueryBuilder.getName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("?");
-            queryString.append("name=" + queryBuilder.getName());
+            queryString.append("name=" + cityQueryBuilder.getName());
         }
-        if (queryBuilder.getState().length() > 0)
+        if (cityQueryBuilder.getState().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("?");
-            queryString.append("state=" + queryBuilder.getState());
+            queryString.append("state=" + cityQueryBuilder.getState());
         }
-        if (queryBuilder.getStateCode().length() > 0)
+        if (cityQueryBuilder.getStateCode().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("?");
-            queryString.append("stateCode=" + queryBuilder.getStateCode());
+            queryString.append("stateCode=" + cityQueryBuilder.getStateCode());
         }
-        if (queryBuilder.getCountry().length() > 0)
+        if (cityQueryBuilder.getCountry().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("?");
-            queryString.append("country=" + queryBuilder.getCountry());
+            queryString.append("country=" + cityQueryBuilder.getCountry());
         }
 
         urlAddress.append(queryString);

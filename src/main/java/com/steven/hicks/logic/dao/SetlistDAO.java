@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Setlist;
+import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 import com.steven.hicks.logic.queryBuilders.SetlistQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -48,83 +49,85 @@ public class SetlistDAO implements DAO
         return setlist;
     }
 
-    public static List<Setlist>  search(SetlistQueryBuilder queryBuilder)
+    public List<Setlist>  search(QueryBuilder queryBuilder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/setlists?");
 
+        SetlistQueryBuilder setlistQueryBuilder = (SetlistQueryBuilder)queryBuilder;
+
         StringBuilder queryString = new StringBuilder();
 
-        if (queryBuilder.getArtistMbid().length() > 0)
+        if (setlistQueryBuilder.getArtistMbid().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistMbid=" + queryBuilder.getArtistMbid());
+            queryString.append("artistMbid=" + setlistQueryBuilder.getArtistMbid());
         }
-        if (queryBuilder.getArtistName().length() > 0)
+        if (setlistQueryBuilder.getArtistName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistName=" + queryBuilder.getArtistName());
+            queryString.append("artistName=" + setlistQueryBuilder.getArtistName());
         }
-        if (queryBuilder.getArtistTmid().length() > 0)
+        if (setlistQueryBuilder.getArtistTmid().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistTmid=" + queryBuilder.getArtistTmid());
+            queryString.append("artistTmid=" + setlistQueryBuilder.getArtistTmid());
         }
-        if (queryBuilder.getCityId().length() > 0)
+        if (setlistQueryBuilder.getCityId().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("cityId=" + queryBuilder.getCityId());
+            queryString.append("cityId=" + setlistQueryBuilder.getCityId());
         }
-        if (queryBuilder.getCityName().length() > 0)
+        if (setlistQueryBuilder.getCityName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("cityName=" + queryBuilder.getCityName());
+            queryString.append("cityName=" + setlistQueryBuilder.getCityName());
         }
-        if (queryBuilder.getCountryCode().length() > 0)
+        if (setlistQueryBuilder.getCountryCode().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("countryCode=" + queryBuilder.getCountryCode());
+            queryString.append("countryCode=" + setlistQueryBuilder.getCountryCode());
         }
-        if (queryBuilder.getDate() != null)
+        if (setlistQueryBuilder.getDate() != null)
         {
             //probably need a DatetimeFormatter here
             //:todo
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("date=" + queryBuilder.getDate());
+            queryString.append("date=" + setlistQueryBuilder.getDate());
         }
-        if (queryBuilder.getLastUpdated() != null)
+        if (setlistQueryBuilder.getLastUpdated() != null)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("lastUpdated=" + queryBuilder.getLastUpdated());
+            queryString.append("lastUpdated=" + setlistQueryBuilder.getLastUpdated());
         }
-        if (queryBuilder.getState().length() > 0)
+        if (setlistQueryBuilder.getState().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("state=" + queryBuilder.getState());
+            queryString.append("state=" + setlistQueryBuilder.getState());
         }
-        if (queryBuilder.getStateCode().length() > 0)
+        if (setlistQueryBuilder.getStateCode().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("stateCode=" + queryBuilder.getStateCode());
+            queryString.append("stateCode=" + setlistQueryBuilder.getStateCode());
         }
-        if (queryBuilder.getTourName().length() > 0)
+        if (setlistQueryBuilder.getTourName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("tourName=" + queryBuilder.getTourName());
+            queryString.append("tourName=" + setlistQueryBuilder.getTourName());
         }
-        if (queryBuilder.getVenueId().length() > 0)
+        if (setlistQueryBuilder.getVenueId().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("venueId=" + queryBuilder.getVenueId());
+            queryString.append("venueId=" + setlistQueryBuilder.getVenueId());
         }
-        if (queryBuilder.getVenueName().length() > 0)
+        if (setlistQueryBuilder.getVenueName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("venueName=" + queryBuilder.getVenueName());
+            queryString.append("venueName=" + setlistQueryBuilder.getVenueName());
         }
-        if (queryBuilder.getYear() != null)
+        if (setlistQueryBuilder.getYear() != null)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("year=" + queryBuilder.getYear());
+            queryString.append("year=" + setlistQueryBuilder.getYear());
         }
 
 

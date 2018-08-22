@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Artist;
 import com.steven.hicks.logic.queryBuilders.ArtistQueryBuilder;
+import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -45,26 +46,28 @@ public class ArtistDAO implements DAO
         return artist;
     }
 
-    public static List<Artist> search(ArtistQueryBuilder queryBuilder)
+    public List<Artist> search(QueryBuilder queryBuilder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/artists?");
 
         StringBuilder queryString = new StringBuilder();
 
-        if (queryBuilder.getArtistName().length() > 0)
+        ArtistQueryBuilder artistQueryBuilder = (ArtistQueryBuilder)queryBuilder;
+
+        if (artistQueryBuilder.getArtistName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistName=" + queryBuilder.getArtistName());
+            queryString.append("artistName=" + artistQueryBuilder.getArtistName());
         }
-        if (queryBuilder.getArtistMbid().length() > 0)
+        if (artistQueryBuilder.getArtistMbid().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistMbid=" + queryBuilder.getArtistMbid());
+            queryString.append("artistMbid=" + artistQueryBuilder.getArtistMbid());
         }
-        if (queryBuilder.getArtistTmid().length() > 0)
+        if (artistQueryBuilder.getArtistTmid().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistTmid=" + queryBuilder.getArtistTmid());
+            queryString.append("artistTmid=" + artistQueryBuilder.getArtistTmid());
         }
 
         urlAddress.append(queryString);

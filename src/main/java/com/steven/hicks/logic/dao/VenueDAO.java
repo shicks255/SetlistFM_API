@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Venue;
+import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 import com.steven.hicks.logic.queryBuilders.VenueQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -49,46 +50,48 @@ public class VenueDAO implements DAO
         return venue;
     }
 
-    public static List<Venue> search(VenueQueryBuilder queryBuilder)
+    public List<Venue> search(QueryBuilder queryBuilder)
     {
         String urlAddress = "https://api.setlist.fm/rest/1.0/search/venues?";
 
+        VenueQueryBuilder venueQueryBuilder = (VenueQueryBuilder)queryBuilder;
+
         StringBuilder query = new StringBuilder();
 
-        if (queryBuilder.getCityId().length() > 0)
+        if (venueQueryBuilder.getCityId().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("cityId=" + queryBuilder.getCityId());
+            query.append("cityId=" + venueQueryBuilder.getCityId());
         }
 
-        if (queryBuilder.getCityName().length() > 0)
+        if (venueQueryBuilder.getCityName().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("cityName=" + queryBuilder.getCityName());
+            query.append("cityName=" + venueQueryBuilder.getCityName());
         }
 
-        if (queryBuilder.getCountryName().length() > 0)
+        if (venueQueryBuilder.getCountryName().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("country=" + queryBuilder.getCountryName());
+            query.append("country=" + venueQueryBuilder.getCountryName());
         }
 
-        if (queryBuilder.getState().length() > 0)
+        if (venueQueryBuilder.getState().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("state=" + queryBuilder.getState());
+            query.append("state=" + venueQueryBuilder.getState());
         }
 
-        if (queryBuilder.getStateCode().length() > 0)
+        if (venueQueryBuilder.getStateCode().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("stateCode=" + queryBuilder.getStateCode());
+            query.append("stateCode=" + venueQueryBuilder.getStateCode());
         }
 
-        if (queryBuilder.getName().length() > 0)
+        if (venueQueryBuilder.getName().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("name=" + queryBuilder.getName());
+            query.append("name=" + venueQueryBuilder.getName());
         }
 
         urlAddress += query.toString();

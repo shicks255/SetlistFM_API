@@ -23,12 +23,13 @@ public class Main
 //        System.out.println(afi);
 
 
-        SetlistQueryBuilder builder = new SetlistQueryBuilder.Builder().artistName("In Flames")
-                .build();
-        List<Setlist> setlists = SetlistDAO.search(builder);
+//        SetlistQueryBuilder builder = new SetlistQueryBuilder.Builder().artistName("In Flames")
+//                .build();
+//        SetlistDAO setlistDAO = new SetlistDAO();
+//        List<Setlist> setlists = setlistDAO.search(builder);
 //
 //
-        String test = "tesT";
+//        String test = "tesT";
 
 //        setlists.forEach(x -> System.out.println(x.toString()));
 
