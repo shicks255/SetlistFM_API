@@ -4,21 +4,30 @@ import com.steven.hicks.beans.*;
 import com.steven.hicks.logic.dao.*;
 import com.steven.hicks.logic.queryBuilders.ArtistQueryBuilder;
 
+import java.util.List;
+
 public class Main
 {
     public static void main(String[] args)
     {
-
         ArtistQueryBuilder builder = new ArtistQueryBuilder.Builder()
                 .artistName("Owen")
                 .build();
 
-        ArtistDAO dao = new ArtistDAO();
+        ArtistSearcher searcher = new ArtistSearcher();
+        searcher.search(builder, 1);
 
 
-        ArtistList artistList = dao.search(builder);
+        while (searcher.hasNextPage())
+        {
+            List<Artist> someArtists = searcher.getSearchResults().getArtist();
 
-        String test = "tes";
+            someArtists.forEach(x -> System.out.println(x));
+            searcher.getNextPage(builder);
+        }
+
+
+        System.out.println(searcher.getNumberOfPages());
 
     }
 
