@@ -16,38 +16,14 @@ public class Main
 {
     public static void main(String[] args)
     {
-//        ArtistQueryBuilder builder = new ArtistQueryBuilder.Builder().artistName("AFI").build();
-//        List<Artist> artists = ArtistDAO.search(builder);
-//        artists.removeIf(x -> !x.getName().equals("AFI"));
-//        Artist afi = ArtistDAO.getArtist(artists.get(0).getMbid());
-//        System.out.println(afi);
+
+        ArtistQueryBuilder builder = new ArtistQueryBuilder.Builder()
+                .artistName("American Football")
+                .build();
 
 
-//        SetlistQueryBuilder builder = new SetlistQueryBuilder.Builder().artistName("In Flames")
-//                .build();
-//        SetlistDAO setlistDAO = new SetlistDAO();
-//        List<Setlist> setlists = setlistDAO.search(builder);
-//
-//
-//        String test = "tesT";
 
-//        setlists.forEach(x -> System.out.println(x.toString()));
 
-//        CityQueryBuilder builder = new CityQueryBuilder.Builder().name("Trenton").build();
-//        List<City> cities = CityDAO.search(builder);
-//
-//        System.out.println(cities);
-//        Setlist setlist = SetlistDAO.getSetlist("63de4613");
-//        System.out.println(setlist);
-
-//        City city = CityDAO.getCity("5357527");
-//        System.out.println(city);
-
-//        VenueQueryBuilder venueBuilder = new VenueQueryBuilder.Builder().cityName("Trenton").build();
-//        VenueDAO.search(venueBuilder);
-
-//        Venue venue = VenueDAO.getVenue("6bd6ca6e");
-//        System.out.println(venue);
     }
 
 }

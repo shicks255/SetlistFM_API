@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VenueDAO implements DAO
+public class VenueDAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
@@ -50,48 +50,46 @@ public class VenueDAO implements DAO
         return venue;
     }
 
-    public List<Venue> search(QueryBuilder queryBuilder)
+    public List<Venue> search(VenueQueryBuilder builder)
     {
         String urlAddress = "https://api.setlist.fm/rest/1.0/search/venues?";
 
-        VenueQueryBuilder venueQueryBuilder = (VenueQueryBuilder)queryBuilder;
-
         StringBuilder query = new StringBuilder();
 
-        if (venueQueryBuilder.getCityId().length() > 0)
+        if (builder.getCityId().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("cityId=" + venueQueryBuilder.getCityId());
+            query.append("cityId=" + builder.getCityId());
         }
 
-        if (venueQueryBuilder.getCityName().length() > 0)
+        if (builder.getCityName().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("cityName=" + venueQueryBuilder.getCityName());
+            query.append("cityName=" + builder.getCityName());
         }
 
-        if (venueQueryBuilder.getCountryName().length() > 0)
+        if (builder.getCountryName().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("country=" + venueQueryBuilder.getCountryName());
+            query.append("country=" + builder.getCountryName());
         }
 
-        if (venueQueryBuilder.getState().length() > 0)
+        if (builder.getState().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("state=" + venueQueryBuilder.getState());
+            query.append("state=" + builder.getState());
         }
 
-        if (venueQueryBuilder.getStateCode().length() > 0)
+        if (builder.getStateCode().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("stateCode=" + venueQueryBuilder.getStateCode());
+            query.append("stateCode=" + builder.getStateCode());
         }
 
-        if (venueQueryBuilder.getName().length() > 0)
+        if (builder.getName().length() > 0)
         {
             if (query.length() > 0) query.append("&");
-            query.append("name=" + venueQueryBuilder.getName());
+            query.append("name=" + builder.getName());
         }
 
         urlAddress += query.toString();

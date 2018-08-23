@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-public class ArtistDAO implements DAO
+public class ArtistDAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
@@ -46,28 +46,26 @@ public class ArtistDAO implements DAO
         return artist;
     }
 
-    public List<Artist> search(QueryBuilder queryBuilder)
+    public List<Artist> search(ArtistQueryBuilder builder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/artists?");
 
         StringBuilder queryString = new StringBuilder();
 
-        ArtistQueryBuilder artistQueryBuilder = (ArtistQueryBuilder)queryBuilder;
-
-        if (artistQueryBuilder.getArtistName().length() > 0)
+        if (builder.getArtistName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistName=" + artistQueryBuilder.getArtistName());
+            queryString.append("artistName=" + builder.getArtistName());
         }
-        if (artistQueryBuilder.getArtistMbid().length() > 0)
+        if (builder.getArtistMbid().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistMbid=" + artistQueryBuilder.getArtistMbid());
+            queryString.append("artistMbid=" + builder.getArtistMbid());
         }
-        if (artistQueryBuilder.getArtistTmid().length() > 0)
+        if (builder.getArtistTmid().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("artistTmid=" + artistQueryBuilder.getArtistTmid());
+            queryString.append("artistTmid=" + builder.getArtistTmid());
         }
 
         urlAddress.append(queryString);

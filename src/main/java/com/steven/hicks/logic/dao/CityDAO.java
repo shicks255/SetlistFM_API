@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-public class CityDAO implements DAO
+public class CityDAO
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
@@ -47,38 +47,35 @@ public class CityDAO implements DAO
         return city;
     }
 
-    public List<City> search(QueryBuilder queryBuilder)
+    public List<City> search(CityQueryBuilder builder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/cities?");
-
-        CityQueryBuilder cityQueryBuilder = (CityQueryBuilder)queryBuilder;
-
         StringBuilder queryString = new StringBuilder();
 
-        if (cityQueryBuilder.getId().length() > 0)
+        if (builder.getId().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("&");
-            queryString.append("id=?" + cityQueryBuilder.getId());
+            queryString.append("id=?" + builder.getId());
         }
-        if (cityQueryBuilder.getName().length() > 0)
+        if (builder.getName().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("?");
-            queryString.append("name=" + cityQueryBuilder.getName());
+            queryString.append("name=" + builder.getName());
         }
-        if (cityQueryBuilder.getState().length() > 0)
+        if (builder.getState().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("?");
-            queryString.append("state=" + cityQueryBuilder.getState());
+            queryString.append("state=" + builder.getState());
         }
-        if (cityQueryBuilder.getStateCode().length() > 0)
+        if (builder.getStateCode().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("?");
-            queryString.append("stateCode=" + cityQueryBuilder.getStateCode());
+            queryString.append("stateCode=" + builder.getStateCode());
         }
-        if (cityQueryBuilder.getCountry().length() > 0)
+        if (builder.getCountry().length() > 0)
         {
             if (queryString.length() > 0) queryString.append("?");
-            queryString.append("country=" + cityQueryBuilder.getCountry());
+            queryString.append("country=" + builder.getCountry());
         }
 
         urlAddress.append(queryString);
