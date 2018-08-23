@@ -17,7 +17,6 @@ public class Main
         ArtistSearcher searcher = new ArtistSearcher();
         searcher.search(builder, 1);
 
-
         while (searcher.hasNextPage())
         {
             List<Artist> someArtists = searcher.getSearchResults().getArtist();

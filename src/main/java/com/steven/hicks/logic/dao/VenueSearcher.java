@@ -1,10 +1,9 @@
 package com.steven.hicks.logic.dao;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Venue;
+import com.steven.hicks.beans.VenueList;
+import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 import com.steven.hicks.logic.queryBuilders.VenueQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -14,10 +13,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VenueDAO
+public class VenueSearcher implements Searchable<Venue, VenueList>
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
+    public VenueList m_venueList;
+
+    @Override
+    public int getNumberOfPages()
+    {
+        return m_venueList.getTotal() / m_venueList.getItemsPerPage();
+    }
+
+    @Override
     public Venue get(String id)
     {
         Venue venue = null;
@@ -49,11 +57,18 @@ public class VenueDAO
         return venue;
     }
 
-    public List<Venue> search(VenueQueryBuilder builder)
+    @Override
+    public void search(QueryBuilder queryBuilder, int pageNumber)
     {
         String urlAddress = "https://api.setlist.fm/rest/1.0/search/venues?";
-
         StringBuilder query = new StringBuilder();
+
+        if (queryBuilder instanceof VenueQueryBuilder == false)
+        {
+            //throw exception
+        }
+
+        VenueQueryBuilder builder = (VenueQueryBuilder)queryBuilder;
 
         if (builder.getCityId().length() > 0)
         {
@@ -110,20 +125,50 @@ public class VenueDAO
             while ((input2 = in.readLine()) != null)
                 data.append(input2);
 
-            JsonNode node = m_objectMapper.readTree(data.toString());
-            JsonNode venueNode = node.get("venue");
-
-            CollectionType javaType = m_objectMapper.getTypeFactory()
-                    .constructCollectionType(List.class, Venue.class);
-
-            m_objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            venues= m_objectMapper.readValue(venueNode.toString(), javaType);
+            m_venueList = m_objectMapper.readValue(data.toString(), VenueList.class);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
-
-        return venues;
     }
+
+    @Override
+    public boolean hasNextPage()
+    {
+        if (m_venueList == null)
+            return false;
+
+        int venuesSoFar = m_venueList.getPage() * m_venueList.getItemsPerPage();
+
+        if (m_venueList.getTotal() > venuesSoFar)
+            return true;
+
+        return false;
+    }
+
+    @Override
+    public VenueList getNextPage(QueryBuilder queryBuilder)
+    {
+        int pageToGet = 1;
+        if (m_venueList != null)
+            pageToGet = m_venueList.getPage() + 1;
+
+        return searchAndGet(queryBuilder, pageToGet);
+    }
+
+    @Override
+    public VenueList searchAndGet(QueryBuilder queryBuilder, int pageNumber)
+    {
+        search(queryBuilder, pageNumber);
+        return m_venueList;
+    }
+
+    @Override
+    public VenueList getSearchResults()
+    {
+        return m_venueList;
+    }
+
+
 }

@@ -1,10 +1,10 @@
 package com.steven.hicks.logic.dao;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Setlist;
+import com.steven.hicks.beans.SetlistList;
+import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 import com.steven.hicks.logic.queryBuilders.SetlistQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -13,10 +13,19 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-public class SetlistDAO
+public class SetlistSearcher implements Searchable<Setlist, SetlistList>
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
+    public SetlistList m_setlistList;
+
+    @Override
+    public int getNumberOfPages()
+    {
+        return m_setlistList.getTotal() / m_setlistList.getItemsPerPage();
+    }
+
+    @Override
     public Setlist get(String id)
     {
         Setlist setlist = null;
@@ -48,11 +57,18 @@ public class SetlistDAO
         return setlist;
     }
 
-    public List<Setlist> search(SetlistQueryBuilder builder)
+    @Override
+    public void search(QueryBuilder queryBuilder, int pageNumber)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/setlists?");
-
         StringBuilder queryString = new StringBuilder();
+
+        if (queryBuilder instanceof SetlistQueryBuilder == false)
+        {
+//            throw an exception here
+        }
+
+        SetlistQueryBuilder builder = (SetlistQueryBuilder)queryBuilder;
 
         if (builder.getArtistMbid().length() > 0)
         {
@@ -127,7 +143,6 @@ public class SetlistDAO
             queryString.append("year=" + builder.getYear());
         }
 
-
         urlAddress.append(queryString);
 
         List<Setlist> setlists = null;
@@ -146,21 +161,49 @@ public class SetlistDAO
             while ((input2 = in.readLine()) != null)
                 data.append(input2);
 
-            JsonNode node = m_objectMapper.readTree(data.toString());
-            JsonNode setlistsNode = node.get("setlist");
-
-            CollectionType javaType = m_objectMapper.getTypeFactory()
-                    .constructCollectionType(List.class, Setlist.class);
-
-            m_objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            setlists = m_objectMapper.readValue(setlistsNode.toString(), javaType);
+            m_setlistList = m_objectMapper.readValue(data.toString(), SetlistList.class);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
+    }
 
-        return setlists;
+    @Override
+    public boolean hasNextPage()
+    {
+        if (m_setlistList == null)
+            return false;
+
+        int setlistsSoFar = m_setlistList.getPage() * m_setlistList.getItemsPerPage();
+
+        if (m_setlistList.getTotal() > setlistsSoFar)
+            return true;
+
+        return false;
+    }
+
+    @Override
+    public SetlistList getNextPage(QueryBuilder queryBuilder)
+    {
+        int pageToGet = 1;
+        if (m_setlistList != null)
+            pageToGet = m_setlistList.getPage() + 1;
+
+        return searchAndGet(queryBuilder, pageToGet);
+    }
+
+    @Override
+    public SetlistList searchAndGet(QueryBuilder queryBuilder, int pageNumber)
+    {
+        search(queryBuilder, pageNumber);
+        return m_setlistList;
+    }
+
+    @Override
+    public SetlistList getSearchResults()
+    {
+        return m_setlistList;
     }
 
 }

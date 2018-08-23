@@ -1,10 +1,10 @@
 package com.steven.hicks.logic.dao;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.City;
+import com.steven.hicks.beans.CityList;
 import com.steven.hicks.logic.queryBuilders.CityQueryBuilder;
+import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -12,10 +12,19 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-public class CityDAO
+public class CitySearcher implements Searchable<City, CityList>
 {
     private static ObjectMapper m_objectMapper = new ObjectMapper();
 
+    public CityList m_cityList;
+
+    @Override
+    public int getNumberOfPages()
+    {
+        return m_cityList.getTotal() / m_cityList.getItemsPerPage();
+    }
+
+    @Override
     public City get(String geoId)
     {
         City city = null;
@@ -46,10 +55,18 @@ public class CityDAO
         return city;
     }
 
-    public List<City> search(CityQueryBuilder builder)
+    @Override
+    public void search(QueryBuilder queryBuilder, int pageNumber)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/cities?");
         StringBuilder queryString = new StringBuilder();
+
+        if (queryBuilder instanceof CityQueryBuilder == false)
+        {
+            //throw an exception here
+        }
+
+        CityQueryBuilder builder = (CityQueryBuilder)queryBuilder;
 
         if (builder.getId().length() > 0)
         {
@@ -95,20 +112,49 @@ public class CityDAO
             while ((input2 = in.readLine()) != null)
                 data.append(input2);
 
-            JsonNode node = m_objectMapper.readTree(data.toString());
-            JsonNode citiesNode = node.get("cities");
-
-            CollectionType javaType = m_objectMapper.getTypeFactory()
-                    .constructCollectionType(List.class, City.class);
-
-            cities = m_objectMapper.readValue(citiesNode.toString(), javaType);
+            m_cityList = m_objectMapper.readValue(data.toString(), CityList.class);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
+    }
 
-        return cities;
+    @Override
+    public boolean hasNextPage()
+    {
+        if (m_cityList == null)
+            return false;
+
+        int citiesSoFar = m_cityList.getPage() * m_cityList.getItemsPerPage();
+
+        if (m_cityList.getTotal() > citiesSoFar)
+            return true;
+
+        return false;
+    }
+
+    @Override
+    public CityList getNextPage(QueryBuilder queryBuilder)
+    {
+        int pageToGet = 1;
+        if (m_cityList != null)
+            pageToGet = m_cityList.getPage() + 1;
+
+        return searchAndGet(queryBuilder, pageToGet);
+    }
+
+    @Override
+    public CityList getSearchResults()
+    {
+        return m_cityList;
+    }
+
+    @Override
+    public CityList searchAndGet(QueryBuilder queryBuilder, int pageNumber)
+    {
+        search(queryBuilder, pageNumber);
+        return m_cityList;
     }
 
 
