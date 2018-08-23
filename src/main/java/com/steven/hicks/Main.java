@@ -1,16 +1,8 @@
 package com.steven.hicks;
 
-import com.steven.hicks.beans.Artist;
-import com.steven.hicks.beans.City;
-import com.steven.hicks.beans.Setlist;
-import com.steven.hicks.beans.Venue;
+import com.steven.hicks.beans.*;
 import com.steven.hicks.logic.dao.*;
 import com.steven.hicks.logic.queryBuilders.ArtistQueryBuilder;
-import com.steven.hicks.logic.queryBuilders.CityQueryBuilder;
-import com.steven.hicks.logic.queryBuilders.SetlistQueryBuilder;
-import com.steven.hicks.logic.queryBuilders.VenueQueryBuilder;
-
-import java.util.List;
 
 public class Main
 {
@@ -18,11 +10,15 @@ public class Main
     {
 
         ArtistQueryBuilder builder = new ArtistQueryBuilder.Builder()
-                .artistName("American Football")
+                .artistName("Owen")
                 .build();
 
+        ArtistDAO dao = new ArtistDAO();
 
 
+        ArtistList artistList = dao.search(builder);
+
+        String test = "tes";
 
     }
 

@@ -1,6 +1,6 @@
 package com.steven.hicks.logic.queryBuilders;
 
-public class ArtistQueryBuilder implements QueryBuilder
+public class ArtistQueryBuilder
 {
     private String artistName = "";
     private String artistMbid = "";

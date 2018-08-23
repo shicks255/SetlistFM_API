@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.City;
 import com.steven.hicks.logic.queryBuilders.CityQueryBuilder;
-import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;

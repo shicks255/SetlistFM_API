@@ -2,16 +2,14 @@ package com.steven.hicks.logic.dao;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Artist;
+import com.steven.hicks.beans.ArtistList;
 import com.steven.hicks.logic.queryBuilders.ArtistQueryBuilder;
-import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
 
 public class ArtistDAO
 {
@@ -46,7 +44,7 @@ public class ArtistDAO
         return artist;
     }
 
-    public List<Artist> search(ArtistQueryBuilder builder)
+    public ArtistList search(ArtistQueryBuilder builder)
     {
         StringBuilder urlAddress = new StringBuilder("https://api.setlist.fm/rest/1.0/search/artists?");
 
@@ -70,7 +68,7 @@ public class ArtistDAO
 
         urlAddress.append(queryString);
 
-        List<Artist> artists = null;
+        ArtistList list = null;
         try
         {
             URL url = new URL(urlAddress.toString());
@@ -88,16 +86,14 @@ public class ArtistDAO
             JsonNode node = m_objectMapper.readTree(data.toString());
             JsonNode artistNodes = node.get("artist");
 
-            CollectionType javaType = m_objectMapper.getTypeFactory()
-                    .constructCollectionType(List.class, Artist.class);
-            artists = m_objectMapper.readValue(artistNodes.toString(), javaType);
+            list = m_objectMapper.readValue(data.toString(), ArtistList.class);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
 
-        return artists;
+        return list;
     }
 
 }

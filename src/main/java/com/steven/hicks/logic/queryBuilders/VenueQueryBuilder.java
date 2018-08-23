@@ -1,8 +1,6 @@
 package com.steven.hicks.logic.queryBuilders;
 
-import com.steven.hicks.beans.City;
-
-public class VenueQueryBuilder implements QueryBuilder
+public class VenueQueryBuilder
 {
     private String cityId = "";
     private String cityName = "";

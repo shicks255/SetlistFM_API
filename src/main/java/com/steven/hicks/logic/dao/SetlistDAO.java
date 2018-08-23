@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Setlist;
-import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 import com.steven.hicks.logic.queryBuilders.SetlistQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -13,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 public class SetlistDAO
 {

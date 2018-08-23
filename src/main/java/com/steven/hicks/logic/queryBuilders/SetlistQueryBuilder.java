@@ -3,7 +3,7 @@ package com.steven.hicks.logic.queryBuilders;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class SetlistQueryBuilder implements QueryBuilder
+public class SetlistQueryBuilder
 {
     String artistMbid = "";
     String artistName = "";

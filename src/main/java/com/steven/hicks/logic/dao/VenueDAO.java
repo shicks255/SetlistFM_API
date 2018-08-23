@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.steven.hicks.beans.Venue;
-import com.steven.hicks.logic.queryBuilders.QueryBuilder;
 import com.steven.hicks.logic.queryBuilders.VenueQueryBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
