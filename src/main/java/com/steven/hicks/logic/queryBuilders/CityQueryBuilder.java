@@ -1,6 +1,6 @@
 package com.steven.hicks.logic.queryBuilders;
 
-public class CityQueryBuilder
+public class CityQueryBuilder implements QueryBuilder
 {
     private String id = "";
     private String country = "";

@@ -1,19 +1,22 @@
 package com.steven.hicks.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VenueList extends ItemList
 {
-    List<Venue> venues;
+    List<Venue> venue;
 
 
-    public List<Venue> getVenues()
+    public List<Venue> getVenue()
     {
-        return venues;
+        return venue;
     }
 
-    public void setVenues(List<Venue> venues)
+    public void setVenue(List<Venue> venue)
     {
-        this.venues = venues;
+        this.venue = venue;
     }
 }

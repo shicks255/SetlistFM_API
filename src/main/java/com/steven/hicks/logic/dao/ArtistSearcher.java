@@ -113,7 +113,11 @@ public class ArtistSearcher implements Searchable<Artist, ArtistList>
             if (queryString.length() > 0) queryString.append("&");
             queryString.append("artistTmid=" + builder.getArtistTmid());
         }
-        if (queryString.length() > 0) queryString.append("&p=" + pageNumber);
+        if (queryString.length() > 0)
+        {
+            queryString.append("&");
+            queryString.append("p=" + pageNumber);
+        }
 
         urlAddress.append(queryString);
 

@@ -11,7 +11,6 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
 
 public class SetlistSearcher implements Searchable<Setlist, SetlistList>
 {
@@ -142,10 +141,14 @@ public class SetlistSearcher implements Searchable<Setlist, SetlistList>
             if (queryString.length() > 0) queryString.append("&");
             queryString.append("year=" + builder.getYear());
         }
+        if (queryString.length() > 0)
+        {
+            queryString.append("&");
+            queryString.append("p=" + pageNumber);
+        }
 
         urlAddress.append(queryString);
 
-        List<Setlist> setlists = null;
         try
         {
             URL url = new URL(urlAddress.toString());
@@ -161,7 +164,9 @@ public class SetlistSearcher implements Searchable<Setlist, SetlistList>
             while ((input2 = in.readLine()) != null)
                 data.append(input2);
 
-            m_setlistList = m_objectMapper.readValue(data.toString(), SetlistList.class);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            m_setlistList = mapper.readValue(data.toString(), SetlistList.class);
         }
         catch (Exception e)
         {

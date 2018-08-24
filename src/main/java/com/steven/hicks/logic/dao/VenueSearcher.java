@@ -10,8 +10,6 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class VenueSearcher implements Searchable<Venue, VenueList>
 {
@@ -61,7 +59,7 @@ public class VenueSearcher implements Searchable<Venue, VenueList>
     public void search(QueryBuilder queryBuilder, int pageNumber)
     {
         String urlAddress = "https://api.setlist.fm/rest/1.0/search/venues?";
-        StringBuilder query = new StringBuilder();
+        StringBuilder queryString = new StringBuilder();
 
         if (queryBuilder instanceof VenueQueryBuilder == false)
         {
@@ -72,43 +70,46 @@ public class VenueSearcher implements Searchable<Venue, VenueList>
 
         if (builder.getCityId().length() > 0)
         {
-            if (query.length() > 0) query.append("&");
-            query.append("cityId=" + builder.getCityId());
+            if (queryString.length() > 0) queryString.append("&");
+            queryString.append("cityId=" + builder.getCityId());
         }
 
         if (builder.getCityName().length() > 0)
         {
-            if (query.length() > 0) query.append("&");
-            query.append("cityName=" + builder.getCityName());
+            if (queryString.length() > 0) queryString.append("&");
+            queryString.append("cityName=" + builder.getCityName());
         }
 
         if (builder.getCountryName().length() > 0)
         {
-            if (query.length() > 0) query.append("&");
-            query.append("country=" + builder.getCountryName());
+            if (queryString.length() > 0) queryString.append("&");
+            queryString.append("country=" + builder.getCountryName());
         }
 
         if (builder.getState().length() > 0)
         {
-            if (query.length() > 0) query.append("&");
-            query.append("state=" + builder.getState());
+            if (queryString.length() > 0) queryString.append("&");
+            queryString.append("state=" + builder.getState());
         }
 
         if (builder.getStateCode().length() > 0)
         {
-            if (query.length() > 0) query.append("&");
-            query.append("stateCode=" + builder.getStateCode());
+            if (queryString.length() > 0) queryString.append("&");
+            queryString.append("stateCode=" + builder.getStateCode());
         }
 
         if (builder.getName().length() > 0)
         {
-            if (query.length() > 0) query.append("&");
-            query.append("name=" + builder.getName());
+            if (queryString.length() > 0) queryString.append("&");
+            queryString.append("name=" + builder.getName());
+        }
+        if (queryString.length() > 0)
+        {
+            queryString.append("&");
+            queryString.append("p=" + pageNumber);
         }
 
-        urlAddress += query.toString();
-
-        List<Venue> venues = new ArrayList<>();
+        urlAddress += queryString.toString();
 
         try
         {

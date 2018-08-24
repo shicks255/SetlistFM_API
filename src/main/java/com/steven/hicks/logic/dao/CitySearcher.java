@@ -10,7 +10,6 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
 
 public class CitySearcher implements Searchable<City, CityList>
 {
@@ -93,10 +92,13 @@ public class CitySearcher implements Searchable<City, CityList>
             if (queryString.length() > 0) queryString.append("?");
             queryString.append("country=" + builder.getCountry());
         }
+        if (queryString.length() > 0)
+        {
+            queryString.append("&p=" + pageNumber);
+        }
 
         urlAddress.append(queryString);
 
-        List<City> cities = null;
         try
         {
             URL url = new URL(urlAddress.toString());

@@ -3,30 +3,68 @@ package com.steven.hicks;
 import com.steven.hicks.beans.*;
 import com.steven.hicks.logic.dao.*;
 import com.steven.hicks.logic.queryBuilders.ArtistQueryBuilder;
+import com.steven.hicks.logic.queryBuilders.CityQueryBuilder;
+import com.steven.hicks.logic.queryBuilders.SetlistQueryBuilder;
+import com.steven.hicks.logic.queryBuilders.VenueQueryBuilder;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Main
 {
     public static void main(String[] args)
     {
+//        searchForArtist("owen");
+
+        searchForCity("New Jersey");
+
+        searchForSetlists("Slayer");
+
+        searchForVenue("Rapids Theatre");
+    }
+
+    public static void searchForArtist(String artist)
+    {
         ArtistQueryBuilder builder = new ArtistQueryBuilder.Builder()
-                .artistName("Owen")
+                .artistName(artist)
                 .build();
 
         ArtistSearcher searcher = new ArtistSearcher();
         searcher.search(builder, 1);
 
-        while (searcher.hasNextPage())
-        {
-            List<Artist> someArtists = searcher.getSearchResults().getArtist();
+    }
 
-            someArtists.forEach(x -> System.out.println(x));
-            searcher.getNextPage(builder);
-        }
+    public static void searchForCity(String city)
+    {
+        CityQueryBuilder builder = new CityQueryBuilder.Builder()
+            .state(city)
+            .build();
 
+        CitySearcher searcher = new CitySearcher();
+        searcher.search(builder, 1);
 
-        System.out.println(searcher.getNumberOfPages());
+    }
+
+    public static void searchForSetlists(String artistName)
+    {
+        SetlistQueryBuilder builder = new SetlistQueryBuilder.Builder()
+                .artistName(artistName)
+                .build();
+
+        SetlistSearcher searcher = new SetlistSearcher();
+        searcher.search(builder, 1);
+
+    }
+
+    public static void searchForVenue(String venueName)
+    {
+        VenueQueryBuilder builder = new VenueQueryBuilder.Builder()
+                .state("New Jersey")
+//                .name(venueName)
+                .build();
+
+        VenueSearcher searcher = new VenueSearcher();
+        searcher.searchAndGet(builder, 1);
 
     }
 
