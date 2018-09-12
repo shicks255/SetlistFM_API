@@ -14,15 +14,10 @@ import java.util.Objects;
 public class Setlist
 {
     private String id = "";
-
     private Artist artist;
-
     private Venue venue;
-
     private List<PerformanceSet> sets;
-
     private String info = "";
-
     private String url = "";
 
     @JsonDeserialize(using = LocalDateDeserializer.class)

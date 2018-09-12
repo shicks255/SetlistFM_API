@@ -18,7 +18,7 @@ public class Main
 
         searchForCity("New Jersey");
 
-        searchForSetlists("Slayer");
+        searchForSetlists("Killswitch Engage");
 
         searchForVenue("Rapids Theatre");
     }
