@@ -16,11 +16,11 @@ public class Main
     {
 //        searchForArtist("owen");
 
-        searchForCity("New Jersey");
+//        searchForCity("New Jersey");
 
-        searchForSetlists("Killswitch Engage");
+        searchForSetlists("73d49ab1");
 
-        searchForVenue("Rapids Theatre");
+//        searchForVenue("Rapids Theatre");
     }
 
     public static void searchForArtist(String artist)
@@ -45,15 +45,14 @@ public class Main
 
     }
 
-    public static void searchForSetlists(String artistName)
+    public static void searchForSetlists(String venueId)
     {
         SetlistQueryBuilder builder = new SetlistQueryBuilder.Builder()
-                .artistName(artistName)
+                .venueId(venueId)
                 .build();
 
         SetlistSearcher searcher = new SetlistSearcher();
         searcher.search(builder, 1);
-
     }
 
     public static void searchForVenue(String venueName)

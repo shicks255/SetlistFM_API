@@ -138,7 +138,7 @@ public class SetlistQueryBuilder implements QueryBuilder
             query.setStateCode(this.stateCode);
             query.setTourName(this.tourName);
             query.setVenueId(this.venueId);
-            query.setVenueId(this.venueName);
+            query.setVenueName(this.venueName);
             query.setYear(this.year);
             return query;
         }
